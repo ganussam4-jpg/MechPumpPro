@@ -1,224 +1,29 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>МехПампПро — подбор УЭЦН</title>
-<style>
-  :root{
-    --bg:#0c1116; --panel:#131b23; --line:#243441; --ink:#e8eef2;
-    --dim:#8299a8; --accent:#2bd9c4; --accent2:#1a9d8e;
-    --sans:-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html,body{height:100%}
-  body{
-    background:radial-gradient(1200px 600px at 50% -10%, #16222c 0%, var(--bg) 60%);
-    color:var(--ink);font-family:var(--sans);
-    display:flex;align-items:center;justify-content:center;
-    min-height:100vh;padding:24px;
-  }
-  .card{width:100%;max-width:440px;text-align:center}
-  .logo{
-    width:64px;height:64px;margin:0 auto 18px;border-radius:16px;
-    background:linear-gradient(135deg,var(--accent),var(--accent2));
-    display:flex;align-items:center;justify-content:center;
-    font-size:30px;font-weight:800;color:#06201c;
-    box-shadow:0 8px 30px rgba(43,217,196,.25);
-  }
-  h1{font-size:30px;letter-spacing:-.5px;margin-bottom:8px}
-  .tagline{color:var(--dim);font-size:16px;margin-bottom:36px;line-height:1.5}
-
-  .btn{
-    display:block;width:100%;padding:18px;margin-bottom:14px;border:none;
-    border-radius:14px;font-size:17px;font-weight:600;font-family:inherit;
-    cursor:pointer;text-decoration:none;transition:transform .08s, box-shadow .2s;
-  }
-  .btn:active{transform:scale(.98)}
-  .btn-primary{
-    background:linear-gradient(135deg,var(--accent),var(--accent2));
-    color:#06201c;box-shadow:0 6px 20px rgba(43,217,196,.3);
-  }
-  .btn-sub{font-size:13px;font-weight:500;opacity:.7;display:block;margin-top:3px}
-  .btn-outline{background:var(--panel);color:var(--ink);border:1px solid var(--line)}
-
-  .footer{margin-top:28px;color:var(--dim);font-size:13px;line-height:1.6}
-  .footer b{color:var(--ink)}
-
-  /* модалка «купить» */
-  .overlay{
-    position:fixed;inset:0;background:rgba(6,10,14,.8);backdrop-filter:blur(4px);
-    display:none;align-items:center;justify-content:center;padding:24px;z-index:10;
-  }
-  .overlay.show{display:flex}
-  .modal{
-    background:var(--panel);border:1px solid var(--line);border-radius:18px;
-    padding:28px 24px;max-width:400px;width:100%;text-align:left;
-  }
-  .modal h2{font-size:20px;margin-bottom:6px;text-align:center}
-  .modal p{color:var(--dim);font-size:14px;text-align:center;margin-bottom:22px}
-  .contact{
-    display:flex;align-items:center;gap:14px;padding:14px 16px;margin-bottom:10px;
-    background:var(--bg);border:1px solid var(--line);border-radius:12px;
-    text-decoration:none;color:var(--ink);font-size:15px;font-weight:500;
-    transition:border-color .2s;
-  }
-  .contact:hover{border-color:var(--accent)}
-  .contact .ico{font-size:22px;width:26px;text-align:center}
-  .contact .lbl{flex:1}
-  .contact .val{color:var(--dim);font-size:13px}
-  .close{
-    display:block;width:100%;margin-top:14px;padding:12px;background:none;
-    border:none;color:var(--dim);font-size:14px;cursor:pointer;font-family:inherit;
-  }
-  .price-note{
-    background:var(--bg);border:1px solid var(--line);border-radius:12px;
-    padding:14px 16px;margin-bottom:18px;font-size:13px;color:var(--dim);line-height:1.6;
-  }
-  .price-note b{color:var(--accent)}
-  .edit{color:#e8a33d}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>МехПампПро - Симуляция механических насосов</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background: #f4f4f4; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        button { padding: 10px 20px; margin: 10px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background: #0056b3; }
+    </style>
 </head>
 <body>
-  <div class="card">
-    <div class="logo">М</div>
-    <h1>МехПампПро</h1>
-    <p class="tagline">Подбор электроцентробежных насосов (УЭЦН)<br>прямо на телефоне, без интернета</p>
-
-    <!-- КНОПКА 1: открыть приложение (демо) -->
-    <a class="btn btn-primary" href="app.html">
-      Открыть приложение
-      <span class="btn-sub">Бесплатный демо-расчёт — попробовать сейчас</span>
-    </a>
-
-    <!-- КНОПКА 2: купить -->
-    <button class="btn btn-outline" onclick="document.getElementById('buy').classList.add('show')">
-      Купить полную версию
-      <span class="btn-sub">Все расчёты, свой каталог, отчёты</span>
-    </button>
-
-    <!-- КНОПКА 3: как пользоваться -->
-    <button class="btn btn-outline" onclick="document.getElementById('help').classList.add('show')">
-      Как пользоваться
-      <span class="btn-sub">Короткая инструкция</span>
-    </button>
-
-    <div class="footer">
-      Работает офлайн на телефоне и компьютере.<br>
-      Android, Astra Linux, РЕД ОС.
+    <div class="container">
+        <h1>МехПампПро</h1>
+        <p>Профессиональное ПО для симуляции и расчета механических насосов.</p>
+        <h2>Цены</h2>
+        <ul>
+            <li>Инженер (1 место): 1 499 ₽/год</li>
+            <li>Бригада (10 мест): 13 999 ₽/год</li>
+            <li>Компания (100 мест): 134 999 ₽/год</li>
+        </ul>
+        <button onclick="window.location.href='app.html'">Открыть приложение</button>
+        <button onclick="window.open('https://t.me/yourbot', '_blank')">Telegram бот</button>
+        <!-- Add more -->
     </div>
-  </div>
-
-  <!-- модалка КУПИТЬ -->
-  <div class="overlay" id="buy">
-    <div class="modal">
-      <h2>Купить полную версию</h2>
-      <p>Напишите удобным способом — пришлю ключ активации</p>
-
-      <div class="price-note">
-        <b>Тарифы</b><br>
-        Инженер (1 место) — <b style="color:var(--accent)">1 499 ₽/год</b><br>
-        Бригада (10 мест) — <b style="color:var(--accent)">13 999 ₽/год</b> <span style="color:var(--dim);font-size:12px">(1 400 ₽/место)</span><br>
-        Компания (100 мест) — <b style="color:var(--accent)">134 999 ₽/год</b> <span style="color:var(--dim);font-size:12px">(1 350 ₽/место)</span><br>
-        <span style="color:var(--warn);font-size:12px">🔥 −30% первым 10 клиентам · −15% за отзыв</span>
-      </div>
-
-      <!-- Способы связи. Приоритет: почта → MAX → Telegram → форма.
-           Замените значения на свои. WhatsApp намеренно убран (Meta запрещена в РФ). -->
-      <a class="contact" href="mailto:you@mail.ru?subject=Покупка МехПампПро">
-        <span class="ico">✉️</span>
-        <span class="lbl">Почта<span class="val edit"> you@mail.ru</span></span>
-      </a>
-      <a class="contact" href="https://max.ru/ваш_профиль" target="_blank">
-        <span class="ico">🅜</span>
-        <span class="lbl">MAX<span class="val edit"> ваш профиль</span></span>
-      </a>
-      <a class="contact" href="https://t.me/ваш_ник" target="_blank">
-        <span class="ico">✈️</span>
-        <span class="lbl">Telegram<span class="val edit"> @ваш_ник</span></span>
-      </a>
-      <a class="contact" href="tel:+79001234567">
-        <span class="ico">📞</span>
-        <span class="lbl">Позвонить<span class="val edit"> +7 900 123-45-67</span></span>
-      </a>
-
-      <!-- Форма заявки: не зависит от мессенджеров, открывает готовое письмо -->
-      <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--line)">
-        <div style="font-size:13px;color:var(--dim);margin-bottom:10px">
-          Или оставьте заявку — откроется готовое письмо:
-        </div>
-        <input id="f-org" placeholder="Организация / имя"
-          style="width:100%;padding:11px 13px;margin-bottom:8px;background:var(--bg);
-          border:1px solid var(--line);border-radius:10px;color:var(--ink);font-size:14px;font-family:inherit"/>
-        <select id="f-tariff"
-          style="width:100%;padding:11px 13px;margin-bottom:8px;background:var(--bg);
-          border:1px solid var(--line);border-radius:10px;color:var(--ink);font-size:14px;font-family:inherit">
-          <option value="Инженер">Инженер — 1 место</option>
-          <option value="Бригада">Бригада — 10 мест</option>
-          <option value="Компания">Компания</option>
-        </select>
-        <button onclick="sendOrder()"
-          style="width:100%;padding:13px;border:none;border-radius:10px;
-          background:linear-gradient(135deg,var(--accent),#1a9d8e);color:#06201c;
-          font-size:15px;font-weight:700;cursor:pointer;font-family:inherit">
-          Оставить заявку
-        </button>
-      </div>
-
-      <button class="close" onclick="document.getElementById('buy').classList.remove('show')">Закрыть</button>
-    </div>
-  </div>
-
-  <!-- модалка КАК ПОЛЬЗОВАТЬСЯ -->
-  <div class="overlay" id="help">
-    <div class="modal">
-      <h2>Как пользоваться</h2>
-      <p>Три шага — и всё работает</p>
-
-      <div class="price-note" style="color:var(--ink)">
-        <b style="color:var(--accent)">1. Открыть</b><br>
-        Нажмите «Открыть приложение» — откроется в браузере. Демо работает сразу,
-        без установки и интернета.<br><br>
-        <b style="color:var(--accent)">2. Попробовать</b><br>
-        Демо считает одну скважину — посмотрите, как работает подбор.<br><br>
-        <b style="color:var(--accent)">3. Купить и активировать</b><br>
-        Нажмите «Купить», получите ключ. В приложении нажмите индикатор
-        лицензии вверху → вставьте ключ → готово. Откроются все расчёты.
-      </div>
-
-      <p style="margin:0;font-size:13px">
-        Совет: в браузере нажмите «Добавить на главный экран» —
-        появится иконка как у обычного приложения.
-      </p>
-
-      <button class="close" onclick="document.getElementById('help').classList.remove('show')">Закрыть</button>
-    </div>
-  </div>
-
-  <script>
-    // закрытие модалок по клику на фон
-    // Заявка через форму → открывает готовое письмо на вашу почту.
-    // ЗАМЕНИТЕ you@mail.ru на свою почту (и в ссылке "Почта" выше).
-    function sendOrder(){
-      var org = document.getElementById('f-org').value.trim();
-      var tariff = document.getElementById('f-tariff').value;
-      if(!org){ alert('Укажите организацию или имя'); return; }
-      var EMAIL = 'you@mail.ru'; // ← ВАША ПОЧТА
-      var subject = 'Заявка на МехПампПро — ' + tariff;
-      var body = 'Здравствуйте! Хочу приобрести МехПампПро.\n\n'
-               + 'Организация/имя: ' + org + '\n'
-               + 'Тариф: ' + tariff + '\n\n'
-               + 'Прошу связаться со мной и прислать реквизиты для оплаты.';
-      window.location.href = 'mailto:' + EMAIL
-        + '?subject=' + encodeURIComponent(subject)
-        + '&body=' + encodeURIComponent(body);
-    }
-
-    document.querySelectorAll('.overlay').forEach(function(o){
-      o.addEventListener('click', function(e){
-        if(e.target === o) o.classList.remove('show');
-      });
-    });
-  </script>
 </body>
 </html>
