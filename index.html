@@ -116,29 +116,55 @@
       <p>Напишите удобным способом — пришлю ключ активации</p>
 
       <div class="price-note">
-        <b>Тарифы <span class="edit">← замените на свои</span></b><br>
-        Инженер (1 место) — 5 000 ₽/год<br>
-        Бригада (10 мест) — 25 000 ₽/год<br>
-        Компания — по запросу
+        <b>Тарифы <span class="edit">← замените цифры на свои</span></b><br>
+        Инженер (1 место) — <s>5 000</s> <b style="color:var(--accent)">2 500 ₽/год</b><br>
+        Бригада (10 мест) — <s>25 000</s> <b style="color:var(--accent)">15 000 ₽/год</b><br>
+        Компания — по запросу<br>
+        <span style="color:var(--warn);font-size:12px">🔥 Специальная цена первым 10 клиентам — в обмен на отзыв</span><br>
+        <span style="font-size:12px;color:var(--dim)">Демо бесплатно · скидка за годовую оплату и несколько лицензий</span>
       </div>
 
-      <!-- ВСЕ способы связи: замените на свои -->
-      <a class="contact" href="https://t.me/ваш_ник" target="_blank">
-        <span class="ico">✈️</span>
-        <span class="lbl">Telegram<span class="val edit"> @ваш_ник</span></span>
-      </a>
-      <a class="contact" href="https://wa.me/79001234567" target="_blank">
-        <span class="ico">💬</span>
-        <span class="lbl">WhatsApp<span class="val edit"> +7 900 123-45-67</span></span>
-      </a>
+      <!-- Способы связи. Приоритет: почта → MAX → Telegram → форма.
+           Замените значения на свои. WhatsApp намеренно убран (Meta запрещена в РФ). -->
       <a class="contact" href="mailto:you@mail.ru?subject=Покупка МехПампПро">
         <span class="ico">✉️</span>
         <span class="lbl">Почта<span class="val edit"> you@mail.ru</span></span>
+      </a>
+      <a class="contact" href="https://max.ru/ваш_профиль" target="_blank">
+        <span class="ico">🅜</span>
+        <span class="lbl">MAX<span class="val edit"> ваш профиль</span></span>
+      </a>
+      <a class="contact" href="https://t.me/ваш_ник" target="_blank">
+        <span class="ico">✈️</span>
+        <span class="lbl">Telegram<span class="val edit"> @ваш_ник</span></span>
       </a>
       <a class="contact" href="tel:+79001234567">
         <span class="ico">📞</span>
         <span class="lbl">Позвонить<span class="val edit"> +7 900 123-45-67</span></span>
       </a>
+
+      <!-- Форма заявки: не зависит от мессенджеров, открывает готовое письмо -->
+      <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--line)">
+        <div style="font-size:13px;color:var(--dim);margin-bottom:10px">
+          Или оставьте заявку — откроется готовое письмо:
+        </div>
+        <input id="f-org" placeholder="Организация / имя"
+          style="width:100%;padding:11px 13px;margin-bottom:8px;background:var(--bg);
+          border:1px solid var(--line);border-radius:10px;color:var(--ink);font-size:14px;font-family:inherit"/>
+        <select id="f-tariff"
+          style="width:100%;padding:11px 13px;margin-bottom:8px;background:var(--bg);
+          border:1px solid var(--line);border-radius:10px;color:var(--ink);font-size:14px;font-family:inherit">
+          <option value="Инженер">Инженер — 1 место</option>
+          <option value="Бригада">Бригада — 10 мест</option>
+          <option value="Компания">Компания</option>
+        </select>
+        <button onclick="sendOrder()"
+          style="width:100%;padding:13px;border:none;border-radius:10px;
+          background:linear-gradient(135deg,var(--accent),#1a9d8e);color:#06201c;
+          font-size:15px;font-weight:700;cursor:pointer;font-family:inherit">
+          Оставить заявку
+        </button>
+      </div>
 
       <button class="close" onclick="document.getElementById('buy').classList.remove('show')">Закрыть</button>
     </div>
@@ -172,6 +198,23 @@
 
   <script>
     // закрытие модалок по клику на фон
+    // Заявка через форму → открывает готовое письмо на вашу почту.
+    // ЗАМЕНИТЕ you@mail.ru на свою почту (и в ссылке "Почта" выше).
+    function sendOrder(){
+      var org = document.getElementById('f-org').value.trim();
+      var tariff = document.getElementById('f-tariff').value;
+      if(!org){ alert('Укажите организацию или имя'); return; }
+      var EMAIL = 'you@mail.ru'; // ← ВАША ПОЧТА
+      var subject = 'Заявка на МехПампПро — ' + tariff;
+      var body = 'Здравствуйте! Хочу приобрести МехПампПро.\n\n'
+               + 'Организация/имя: ' + org + '\n'
+               + 'Тариф: ' + tariff + '\n\n'
+               + 'Прошу связаться со мной и прислать реквизиты для оплаты.';
+      window.location.href = 'mailto:' + EMAIL
+        + '?subject=' + encodeURIComponent(subject)
+        + '&body=' + encodeURIComponent(body);
+    }
+
     document.querySelectorAll('.overlay').forEach(function(o){
       o.addEventListener('click', function(e){
         if(e.target === o) o.classList.remove('show');
